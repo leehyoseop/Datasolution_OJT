@@ -1,3 +1,30 @@
 Azure Data Studio
 Windows, macOS, Linux에서 온-프레미스 및 클라우드 데이터 플랫폼을 사용하는 데이터 전문가를 위한 플랫폼 간 데이터베이스 도구
 다운로드 -> Windows	사용자 설치 프로그램(권장)
+
+
+Oracle DB / sqldeveloper 설치
+
+cmd창에서
+1.sqlplus
+2.system / 1 입력
+3.@C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql (scott계정 접속)
+4.alter user scott identified by tiger (scott계정 비밀번호 tiger로 변경)
+
+-user생성
+
+sqlplus / as sysdba
+create user [ID명] identified by [PASSWORD명];
+grant connect, resource to [ID];
+create tablespace [tablespace명] datafile 'C:\Users\User\Documents\[파일명]' size 500m;
+alter user [id명] default tablespace [tablespace명];
+
+-legacy 생성되지 않을 때
+vm 경로 수정
+
+-http://download.eclipse.org/releases/neon
+STS에서DB연결 Help->software database development 체크
+
+-tomcat 
+1 window-server-runtime
+2 servers

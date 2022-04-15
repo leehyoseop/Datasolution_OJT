@@ -43,7 +43,7 @@ public interface로 만들어서 이걸 상속 받아서 쓴다
 
 @annotation으로 유효성 검사
 
-
+Restful API
 
 
 

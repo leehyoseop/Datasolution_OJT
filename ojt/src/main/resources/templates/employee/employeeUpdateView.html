@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee Details</title>
+</head>
+<body>
+	<button type="button" onclick="location.href='/employeeControl'" style = "width : 100px; background-color:silver; color:black; font-size:60;">Main page</button>
+	<form th:action="@{'/employees/' + ${selectedemployee.empId}}" method = "post">
+		<input type="hidden" name="_method" value="put"/>
+		<table style="margin-left: auto; margin-right: auto; text-align: center;">
+			<tr>
+				<td><b>사용자ID&nbsp;&nbsp;</b></td>
+				<td><input th:value="${selectedemployee.empId}" disabled></td>			
+			</tr>
+			<tr>
+				<td><b>사용자명&nbsp;&nbsp;</b></td>
+				<td><input type="text" id="empNm" name="empNm" th:value="${selectedemployee.empNm}"></td>
+			</tr>
+			<tr>
+				<td><b>부서&nbsp;&nbsp;</b></td>
+				<td>
+				<select name = "deptId">
+					<option th:value = "${seldept.deptId}">
+						<span th:text = "${seldept.deptNm}"></span>
+					</option>
+             		<option th:each = "notseldept : ${notseldeptlist}" th:value = "${notseldept.deptId}">
+             			<span th:text = "${notseldept.deptNm}"></span>
+             		</option>	
+             	</select>
+             	</td>
+			</tr>
+			<tr>
+				<td><b>전화번호&nbsp;&nbsp;</b></td>
+				<td><input type="text" id="telNo" name="telNo" th:value="${selectedemployee.telNo}"></td>
+			</tr>
+			<tr>
+				<td><b>주소&nbsp;&nbsp;</b></td>
+				<td><input type="text" id="addr" name="addr" th:value="${selectedemployee.addr}"></td>
+			</tr>
+			<table style="margin-left: auto; margin-right: auto; text-align: center;">
+         	<hr>
+         	<center style="margin-left: auto; margin-right: auto; text-align: center;"><b>취미</b></center>
+         		<tr th:each = "selhob : ${selhobbylist}">
+           			<td>
+            		<span th:text = "${selhob.hobNm}"></span>
+            		<input type="checkbox" name = hobbies th:value = "${selhob.hobId}" checked>
+           			</td>
+         		</tr>
+         		<tr th:each = "notselhob : ${notselhobbylist}">
+           			<td>
+            		<span th:text = "${notselhob.hobNm}"></span>
+            		<input type="checkbox" name = hobbies th:value = "${notselhob.hobId}" >
+           			</td>
+         		</tr>
+         	</table>
+		</table>
+		<table style="margin-left: auto; margin-right: auto; text-align: center;">
+        	<tr>
+        		<td>
+        		<button style = "width : 100px; background-color:darkblue; color:#FFFFFF; font-size:60;">업데이트</button>
+        		</td>
+        	</tr>
+        </table>
+	</form>
+	<form th:action="@{'/employees/' + ${selectedemployee.empId}}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <table style="margin-left: auto; margin-right: auto; text-align: center;">
+        	<tr>
+        		<td>
+        		<button style = "width : 100px; background-color:darkred; color:#FFFFFF; font-size:60;">삭제</button>
+        		</td>
+        	</tr>
+        </table>
+    </form>
+</body>
+</html>

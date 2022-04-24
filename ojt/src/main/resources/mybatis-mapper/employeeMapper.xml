@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.example.demo.employee.mapper.EmployeeMapper">
+    <insert id="insert" parameterType="com.example.demo.employee.dto.EmployeeDTO">
+        insert into Employee values(#{empId}, #{empNm}, #{deptId}, #{telNo}, #{addr})
+    </insert>
+    
+    <select id="search" resultType="com.example.demo.employee.dto.EmployeeDTO" parameterType="com.example.demo.employee.dto.EmployeeDTO">
+        select * from Employee where EMP_NM LIKE '%'||#{empNm}||'%'
+    </select>
+    
+    <select id="selectOne" resultType="com.example.demo.employee.dto.EmployeeDTO" parameterType="com.example.demo.employee.dto.EmployeeDTO">
+        select * from Employee where EMP_ID = #{empId} 
+    </select>
+    
+    <update id = "updateEmp" parameterType="Map">
+    	update Employee set EMP_NM = #{dto.empNm}, DEPT_ID = #{dto.deptId}, TELNO = #{dto.telNo}, ADDR = #{dto.addr} where EMP_ID = #{id}
+    </update>
+    
+    <delete id = "deleteEmpHob" parameterType="String">
+    	delete EmployeeHobby where EMP_ID = #{id}
+    </delete>
+    
+    <delete id = "delete" parameterType="com.example.demo.employee.dto.EmployeeDTO">
+    	delete Employee where EMP_ID = #{empId}
+    </delete>
+    
+    <!--  
+    <select id="select" resultType="com.example.demo.employee.dto.EmployeeDTO">
+        select * from Employee
+    </select>
+    -->
+    
+    <select id="selectDepartment" resultType="com.example.demo.employee.dto.DepartmentDTO">
+    	select * from Department
+    </select>
+    
+    <select id="selectHobby" resultType="com.example.demo.employee.dto.HobbyDTO">
+    	select * from Hobby
+    </select>
+    
+    <select id="selectedDepartment" resultType="com.example.demo.employee.dto.DepartmentDTO" parameterType="String">
+    	select DEPT_ID, DEPT_NM from Department NATURAL JOIN Employee where EMP_ID = #{id} 
+    </select>
+    
+    <select id="notselectedDepartment" resultType="com.example.demo.employee.dto.DepartmentDTO" parameterType="String">
+    	select DEPT_ID, DEPT_NM from Department where DEPT_ID != #{id} 
+    </select>
+    
+    <select id="selectedHobby" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby NATURAL JOIN EmployeeHobby where EMP_ID = #{id}
+    </select>
+    
+    <select id="notselectedHobby0" resultType="com.example.demo.employee.dto.HobbyDTO">
+    	select HOB_ID, HOB_NM from Hobby
+    </select>
+    <select id="notselectedHobby1" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby where HOB_ID != #{id1}
+    </select>
+    <select id="notselectedHobby2" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby where HOB_ID != #{id1} and HOB_ID != #{id2}
+    </select>
+    <select id="notselectedHobby3" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby where HOB_ID != #{id1} and HOB_ID != #{id2} and HOB_ID !=#{id3}
+    </select>
+    <select id="notselectedHobby4" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby where HOB_ID != #{id1} and HOB_ID != #{id2} and HOB_ID !=#{id3} and HOB_ID !=#{id4}
+    </select>
+    <select id="notselectedHobby5" resultType="com.example.demo.employee.dto.HobbyDTO" parameterType="String">
+    	select HOB_ID, HOB_NM from Hobby where HOB_ID != #{id1} and HOB_ID != #{id2} and HOB_ID !=#{id3} and HOB_ID !=#{id4} and HOB_ID !=#{id5}
+    </select>
+   
+    <insert id="insertEmpHob" parameterType="Map">
+    	insert into EmployeeHobby values(#{dto.empId}, #{id})
+    </insert>
+    
+    <insert id="updateEmpHob" parameterType="Map">
+    	insert into EmployeeHobby values(#{id}, #{hobid})
+    </insert>
+    
+    <select id="idDuplicateCheck" resultType="Int" parameterType="com.example.demo.employee.dto.EmployeeDTO">
+		select case when count(*)>=1 then 1 else 0 end as isExited from Employee where EMP_ID = #{empId}
+	</select>
+	
+	<!-- 부서+회원정보 조회(조직도 만들기위해)-->
+   <select id="getEmpDept" resultType="com.example.demo.employee.dto.DeptOrganizationDTO">
+      select DEPT_ID, UP_DEPT_ID, DEPT_NM
+    , listagg(EMP_NM, ',') within group (order by EMP_NM) as empList
+            from (
+                select d.dept_id, d.dept_nm, d.up_dept_id, e.emp_nm
+                from Department d, Employee e
+                where d.dept_id = e.dept_id(+)
+                )
+            group by DEPT_ID, UP_DEPT_ID, DEPT_NM
+   </select>
+   
+   <!-- /////참고 -->
+	<!-- 부서+회원정보 조회(조직도 만들기위해)-->
+   <select id="getJson" resultType="com.example.demo.employee.dto.DeptOrganizationDTO">
+      select DEPT_ID, UP_DEPT_ID, DEPT_NM
+    , listagg(EMP_NM, ',') within group (order by EMP_NM) as empList
+            from (
+                select d.dept_id, d.dept_nm, d.up_dept_id, e.emp_nm
+                from Department d, Employee e
+                where d.dept_id = e.dept_id(+)
+                )
+            group by DEPT_ID, UP_DEPT_ID, DEPT_NM
+   </select>
+</mapper>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <form action="/employees/new" method = "post">
+      <table width = "400px" style="margin-left: auto; margin-right: auto; text-align: center;">
+         <tr>
+            <td><hr>
+            <b>사원ID</b>
+            <input style="margin-left: auto; margin-right: auto; text-align: center;" type="text" id="id" name="empId" placeholder="사원ID를 입력하세요">
+            <br>
+            <span th:text = "${valid_empId}" style="color:red"></span>
+            </td>
+         </tr>
+         <tr>
+            <td><hr>
+            <b>사원명</b>
+            <input style="margin-left: auto; margin-right: auto; text-align: center;" type="text" id="name" name ="empNm" placeholder="사원명을 입력하세요">
+            <br>
+            <span th:text = "${valid_empNm}" style="color:red"></span>
+            </td>
+         </tr>
+         <tr>
+            <td><hr>
+            <b>부서</b>
+            <!-- 
+            <input style="margin-left: auto; margin-right: auto; text-align: center;" type="text" id="deptid" name ="deptId" placeholder="부서ID를 입력하세요">
+             -->
+             <select name = "deptId">
+             	<option th:each = "dept : ${deptlist}" th:value = "${dept.deptId}">
+             		<span th:text = "${dept.deptNm}"></span>
+             	</option>	
+             </select>
+            </td>
+         </tr>
+         <tr>
+            <td><hr>
+            <b>전화번호</b>
+            <input style="margin-left: auto; margin-right: auto; text-align: center;" type="text" id="telno" name ="telNo" placeholder="전화번호를 입력하세요">
+            </td>
+         </tr>
+         <tr>
+            <td><hr>
+            <b>주소</b>
+            <input style="margin-left: auto; margin-right: auto; text-align: center;" type="text" id="addr" name ="addr" placeholder="주소를 입력하세요">
+            </td>
+         </tr>
+         
+         <table style="margin-left: auto; margin-right: auto; text-align: center;">
+         <hr>
+         <center style="margin-left: auto; margin-right: auto; text-align: center;"><b>취미</b></center>
+         <tr th:each = "hobby : ${hobbylist}">
+           <td>
+            <span th:text = "${hobby.hobNm}"></span>
+            <input type="checkbox" name = hobbies th:value = "${hobby.hobId}">
+           	</td>
+         </tr>
+         </table>
+         
+         <tr>
+            <td>
+            <hr>
+            <table style="margin-left: auto; margin-right: auto; text-align: center;">
+           		<tr>
+            		<td>
+            		<button style = "width : 100px; background-color:silver; color:black; font-size:60;">등록</button>
+            		</td>
+            	</tr>
+            	<table style="margin-left: auto; margin-right: auto; text-align: center;">
+            		<tr>
+            			<td>
+            			<span th:text="${msg}" style="color:red"></span>
+            			</td>
+            		</tr>
+            	</table>
+            </table>
+            </td>
+         </tr>
+      </table>
+   </form>
+   <!--<button type="button" onclick = "opener.location.href = '/employeeControl';window.close();">닫기</button>
+   -->
+</body>
+</html>

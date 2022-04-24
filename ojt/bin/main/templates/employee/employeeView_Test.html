@@ -1,0 +1,31 @@
+value<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee 조회</title>
+</head>
+<body>
+    <a href="/employees">employee list</a>
+    <form th:action="@{'/employees/' + ${employee.id}}" method="post">
+        <input type="hidden" name="_method" value="put"/>
+        <table>
+            <tr>
+                <td>id</td>
+                <!-- input의 name 속성과 DTO 속성 이름 맞춰주기 -->
+                <td><input th:value="${employee.id}" disabled></td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <!-- input의 name 속성과 DTO 속성 이름 맞춰주기 -->
+                <td><input type="text" id="name" name="name" th:value="${employee.name}"></td>
+            </tr>
+        </table>
+        <button type="submit">수정</button>
+    </form>
+
+    <form th:action="@{'/employees/' + ${employee.id}}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button>삭제</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Control</title>
+
+</head>
+<style type="text/css"> 
+a { text-decoration:none } 
+</style>
+<body>
+	<table style="margin-left: auto; margin-right: auto; text-align: center;">
+		<tr>
+			<td><button type="button" onclick="location.href='/employeeControl'" style = "width:150px; background-color:midnightblue; height:50px; color:#FFFFFF; font-size:30;">사용자관리</button></td>
+			<td><button type="button" onclick="location.href='/departmentOrganization'" style = "width:150px; background-color:midnightblue; height:50px; color:#FFFFFF; font-size:30;">조직도</button></td>
+		</tr>
+	</table>
+	<hr style="height:2px;border:none;color:#333;background-color:#333;">
+	<form action="/employees/search" method = "get">
+		<table width = "400px" style="margin-left: auto; margin-right: auto; text-align: center;">
+				<tr>
+					<td>이름 : 
+						<input type = "text" id = "searchname" name="empNm" placeholder = "사용자명 입력" required="required" style="margin-right: auto; text-align: center; font-style: italic;">
+						<button type = "submit" style = "width : 100px; background-color:silver; color:black; font-size:60;">검색</button>
+					</td>
+				</tr>
+		</table>
+	</form>
+	<hr>
+	<table style="margin-left: auto; margin-right: auto;">
+		<tr>
+			<td>
+				<table width = "700px" style="margin-left: auto; margin-right: auto; text-align: center;">
+					<tbody>
+						<tr>
+							<td><b>사용자ID<b></td>
+							<td><b>사용자명</b></td>
+							<td><b>부서ID</b></td>
+							<td><b>전화번호</b></td>
+						</tr>
+						<tr th:each = "employee : ${employeelist}">
+							<td> 
+								<a th:href = "@{'/employees/update/' + ${employee.empId}}" style="color: lightcoral; font-weight: bold;">
+									<span th:text="${employee.empId}"></span>
+								</a>
+								<!--
+								<button style="color: lightcoral; font-weight: bold;" th:onclick = "window.open(|@{'/employees/update/' + ${employee.empId}}|,'EmployeeUpdate', 'width = 430, height = 500, location = no, status = no, scrollbars=yes');">
+									<span th:text="${employee.empId}"></span>
+								</button>
+								-->
+							</td>
+							<td>
+								<span th:text="${employee.empNm}"></span>
+							</td>
+							<td>
+								<span th:text="${employee.deptId}"></span>
+							</td>
+							<td>
+								<span th:text="${employee.telNo}"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	<table>
+		<tr>
+			<td><button type="button" onclick = "window.open('/employees/new','EmployeeUpdate', 'width = 500, height = 500, location = no, status = no, scrollbars=yes');" style = "width : 100px; background-color:silver; color:black; font-size:60;">신규 등록</button></td>
+		</tr>
+	</table>
+</body>
+</html>

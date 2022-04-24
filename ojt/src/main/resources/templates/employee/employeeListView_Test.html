@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<thead>
+		<tr>
+			<th>id</th>
+			<th>name</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each = "employee : ${employeeList}">
+			<td>
+				<a th:href = "@{'/employees/' + ${employee.id}}">
+					<span th:text="${employee.id}"></span>
+				</a>
+			</td>
+			<td>
+				<span th:text="${employee.name}"></span>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</body>
+</html>
